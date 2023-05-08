@@ -15,11 +15,12 @@ class Labelme2Yolo:
         self.labellist = labellist
         self.processingFolder = processingFolder
 
-
     def convert2YOLO(self):
         self.getLabelsFromJson()
         self.getFilename()
-        self.writeYOLOtoFile(self.yoloarr,os.path.join(self.processingFolder,self.filename))
+        self.writeYOLOtoFile(
+            self.yoloarr, os.path.join(self.processingFolder, self.filename)
+        )
 
     def getFilename(self):
         self.filename = os.path.splitext(self.jsonFile["imagePath"])[0] + ".txt"
@@ -65,5 +66,3 @@ class Labelme2Yolo:
                 f.write(" ")
                 f.write(str(annotations[4]))
                 f.write("\n")
-
-

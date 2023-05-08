@@ -40,15 +40,15 @@ class fileUtils:
             print("folder already exists!")
         try:
             os.makedirs(os.path.join("export/valid", images))
-            os.makedirs(os.path.join("expost/valid", labels))
+            os.makedirs(os.path.join("export/valid", labels))
         except FileExistsError:
             print("folder already exists!")
 
     def moveToFolder(self, jsonList, destinationFolder):
         def moveLabelandImage(annotation, foldername):
             orig_labels_path = os.path.join(self.processingFolder, annotation)
-            orig_images_path = os.path.join(self.processingFolder, findMatchingImage(annotation))
-
+            matchedImage = str(findMatchingImage(annotation))
+            orig_images_path = os.path.join(self.processingFolder, matchedImage)
             dest_labels_path = os.path.join(
                 self.exportFolder, os.path.join(foldername, "labels")
             )
@@ -57,33 +57,43 @@ class fileUtils:
                 self.exportFolder, os.path.join(foldername, "images")
             )
             full_dest_label_path = os.path.join(dest_labels_path, annotation) 
-            full_dest_image_path = os.path.join(dest_images_path, findMatchingImage(annotation))
-            print(full_dest_label_path, full_dest_image_path)
+            full_dest_image_path = os.path.join(dest_images_path, matchedImage)
+            
+            if os.path.exists(orig_images_path):
+                shutil.move(orig_images_path, full_dest_image_path)
+            else:
+                pass 
+            if os.path.exists(orig_labels_path):
+                shutil.move(orig_labels_path, full_dest_label_path)
+            else:
+                pass
+                
+
         def findMatchingImage(annotation):
             for file in self.allfiles:
                 if file.endswith(tuple(ext)):
                     if os.path.splitext(file)[0] == os.path.splitext(annotation)[0]:
-                        return file
+                        if file != None:
+                            return file
 
 
         match destinationFolder:
             case "train":
                 print("train set")
-                for index in range(0, self.train_number - 1):
+                for index in tqdm.tqdm(range(0, self.train_number - 1)):
                     moveLabelandImage(jsonList[index], "train")
             case "valid":
                 print("valid set")
-                for index in range(
+                for index in tqdm.tqdm(range(
                     (self.train_number), (self.train_number + self.val_number) - 1
-                ):
-                    # print(jsonList[index])
+                )):
                     moveLabelandImage(jsonList[index], "valid")
             case "test":
                 print("test set")
-                for index in range(
+                for index in tqdm.tqdm(range(
                     (self.train_number + self.val_number),
                     (self.train_number + self.val_number + self.test_number) - 1,
-                ):
+                )):
                     moveLabelandImage(jsonList[index], "test")
 
     def moveAnnotationsToFolder(self, train_split=75, val_split=15, test_split=10):
