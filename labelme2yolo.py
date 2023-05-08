@@ -14,6 +14,7 @@ class Labelme2Yolo:
         self.jsonFile = json
         self.labellist = labellist
         self.processingFolder = processingFolder
+    
 
     def convert2YOLO(self):
         self.getLabelsFromJson()

@@ -4,7 +4,7 @@ from pathlib import Path
 import tqdm
 import shutil
 import math
-
+import yaml
 
 ext = [".jpeg", ".jpg", ".png"]
 
@@ -13,6 +13,12 @@ class fileUtils:
     def __init__(self, processingFolder, exportFolder):
         self.processingFolder = processingFolder
         self.exportFolder = exportFolder
+    
+    def loadLabelList(self):
+        with open(os.path.join(self.exportFolder,"data.yaml")) as file:
+            data_yaml = yaml.safe_load(file)
+            labellist = data_yaml["names"]
+            return labellist
 
     def createLabelListFromFolder(self):
         jsonlist = []
@@ -23,7 +29,18 @@ class fileUtils:
                     for label in jsonFile["shapes"]:
                         jsonlist.append(label["label"])
         jsonlist = sorted(set(jsonlist))
-        return jsonlist
+        # print("TYPE:", type(jsonlist))
+        with open(os.path.join(self.exportFolder,"data.yaml"), "w") as file:
+            ayylmao = dict(
+                    names = jsonlist, 
+                    nc = len(jsonlist),
+                    train= r'/export/train/images',
+                    val = r'/export/valid/images',
+                    test = r'/export/test/images',
+                    ) 
+            yaml.dump(ayylmao,file,default_flow_style=None)
+
+
 
     def createExportFolder(self):
         images = "images"
