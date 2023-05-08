@@ -4,7 +4,6 @@ from pathlib import Path
 import math
 import tqdm
 
-testList = ["0.5", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
 class Labelme2Yolo:
@@ -14,7 +13,6 @@ class Labelme2Yolo:
         self.jsonFile = json
         self.labellist = labellist
         self.processingFolder = processingFolder
-    
 
     def convert2YOLO(self):
         self.getLabelsFromJson()
