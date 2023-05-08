@@ -1,24 +1,11 @@
 import json
-import os 
+import os
 from pathlib import Path
+from fileutils import fileUtils as fu
 
 
-
-
-
-
-
-def processJson(jsonFolder):
-    labellist = []
-    for roots,dirs,files in os.walk(jsonFolder):
-        for file in files:
-            if file.endswith(".json"):
-                jsonFile = json.load(open(os.path.join(roots,file)))
-                for label in jsonFile["shapes"]:
-                    labellist.append(label["label"])
-    labellist = sorted(set(labellist))
-    print(labellist)
-def main(labelFolder): 
-    processJson(labelFolder)
-
+def main(labelFolder):
+    labeljsons = fu("test") 
+    labeljsons = labeljsons.createLabelListFromFolder()
+    print(labeljsons) 
 main("test")
