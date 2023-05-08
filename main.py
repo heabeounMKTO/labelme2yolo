@@ -5,7 +5,7 @@ from fileutils import fileUtils as fu
 
 
 def main(labelFolder):
-    labeljsons = fu("test") 
-    labeljsons = labeljsons.createLabelListFromFolder()
-    print(labeljsons) 
+    labeljsons = fu("test","export") 
+    labeljsons.moveAnnotationsToFolder() 
+
 main("test")
