@@ -2,15 +2,25 @@ import json
 import os
 from pathlib import Path
 import math
+import tqdm
 
 testList = ['0.5','1','2','3','4','5','6','7','8','9']
 
 class Labelme2Yolo:
-    def __init__(self, json):
+    def __init__(self, json, labellist):
         # self.jsonFilePath = Path(jsonFilePath)
         # self.jsonFile = json.load(open(self.jsonFilePath))
         self.jsonFile = json
+        self.labellist = labellist
     
+
+    def convert2YOLO(self):
+        self.getLabelsFromJson()
+        self.writeYOLOtoFile(self.yoloarr,self.filename)
+
+    def getFilename(self):
+        self.filename = os.path.splitext(self.jsonFile["imagePath"])[0] + ".txt"
+        return self.filename 
 
     def xyxy2xywh(self, xyxy):
         x1,y1 = xyxy[0]
@@ -28,17 +38,20 @@ class Labelme2Yolo:
         return self.imageDimensions
 
     def getLabelsFromJson(self):
-        yoloarr = [] 
+        self.yoloarr = [] 
         self.getImageDimensions()
         for labels in self.jsonFile["shapes"]:
             x1y1 = labels["points"][0]
             x2y2 = labels["points"][1]
             x,y,w,h = self.xyxy2xywh((x1y1, x2y2))
-            labelclass = testList.index(labels["label"])
-            yoloarr.append([labelclass,x,y,w,h])
-        print(yoloarr)
-        with open("testyolo.txt", "w") as f:
-            for annotations in yoloarr:
+            labelclass = self.labellist.index(labels["label"])
+            self.yoloarr.append([labelclass,x,y,w,h])
+        return self.yoloarr
+
+    def writeYOLOtoFile(self,yololabels,filename):
+        print("Writing annoations to File...")
+        with open(filename, "w") as f:
+            for annotations in tqdm.tqdm(yololabels):
                 f.write(str(annotations[0]))
                 f.write(" ")
                 f.write(str(annotations[1]))
@@ -49,6 +62,8 @@ class Labelme2Yolo:
                 f.write(" ")
                 f.write(str(annotations[4]))
                 f.write("\n")
+        
+
 testjson = json.load(open("test2/lbm/dragon-1683001744714.json"))
-test = Labelme2Yolo(testjson)
-test.getLabelsFromJson()
+test = Labelme2Yolo(testjson,testList)
+test.getFilename()
