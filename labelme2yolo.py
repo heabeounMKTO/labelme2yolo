@@ -8,20 +8,23 @@ testList = ["0.5", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
 class Labelme2Yolo:
-    def __init__(self, json, labellist):
+    def __init__(self, json, labellist, processingFolder):
         # self.jsonFilePath = Path(jsonFilePath)
         # self.jsonFile = json.load(open(self.jsonFilePath))
         self.jsonFile = json
         self.labellist = labellist
+        self.processingFolder = processingFolder
+
 
     def convert2YOLO(self):
         self.getLabelsFromJson()
-        self.writeYOLOtoFile(self.yoloarr, self.filename)
+        self.getFilename()
+        self.writeYOLOtoFile(self.yoloarr,os.path.join(self.processingFolder,self.filename))
 
     def getFilename(self):
         self.filename = os.path.splitext(self.jsonFile["imagePath"])[0] + ".txt"
         return self.filename
-    
+
     def xyxy2xywh(self, xyxy):
         x1, y1 = xyxy[0]
         x2, y2 = xyxy[1]
@@ -64,6 +67,3 @@ class Labelme2Yolo:
                 f.write("\n")
 
 
-testjson = json.load(open("test2/lbm/dragon-1683001744714.json"))
-test = Labelme2Yolo(testjson, testList)
-test.getFilename()
