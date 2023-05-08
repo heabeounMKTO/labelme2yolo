@@ -162,6 +162,12 @@ cython_debug/
 #misc
 export/*
 export1/*
+export1/test/images/*
+export1/test/labels/*
+export1/valid/images/*
+export1/valid/labels/*
+export1/train/images/*
+export1/train/labels/*
 test/*
 test/*txt
 test/*png
