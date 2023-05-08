@@ -161,6 +161,7 @@ cython_debug/
 
 #misc
 export/*
+test/*
 test/*txt
 test/*png
 test/*jpg
