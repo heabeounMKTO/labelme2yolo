@@ -163,4 +163,5 @@ cython_debug/
 test/*png
 test/*jpg
 test/*jpeg
+test/*json
 twoeight-detect.v3i.yolov7pytorch/*
