@@ -165,3 +165,6 @@ test/*jpg
 test/*jpeg
 test/*json
 twoeight-detect.v3i.yolov7pytorch/*
+yolo/*
+yolo_nostretch/*
+test2/*
