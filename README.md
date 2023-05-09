@@ -7,5 +7,5 @@ simple tool to convert labelme annotations to yolo annotations
 
 
 ## todo 
-- convert lableme to yolo (✔️) 
+- convert lableme to yolo (✅) 
 - create image augmentations ( )
