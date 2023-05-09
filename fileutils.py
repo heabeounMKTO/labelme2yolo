@@ -13,6 +13,12 @@ class fileUtils:
     def __init__(self, processingFolder, exportFolder):
         self.processingFolder = processingFolder
         self.exportFolder = exportFolder
+    
+    def getProcessingFolder(self):
+        return self.processingFolder
+    
+    def getExportFolder(self):
+        return self.exportFolder
 
     def loadLabelList(self):
         with open(os.path.join(self.exportFolder, "data.yaml")) as file:
@@ -29,7 +35,7 @@ class fileUtils:
                     for label in jsonFile["shapes"]:
                         jsonlist.append(label["label"])
         jsonlist = sorted(set(jsonlist))
-        # print("TYPE:", type(jsonlist))
+
         with open(os.path.join(self.exportFolder, "data.yaml"), "w") as file:
             ayylmao = dict(
                 names=jsonlist,

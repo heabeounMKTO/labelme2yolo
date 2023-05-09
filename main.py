@@ -7,10 +7,11 @@ import typer
 
 
 def initConversion(processFolder, exportFolder):
-    file_utils = fu(processFolder,exportFolder)
+    file_utils = fu(processFolder, exportFolder)
     file_utils.createExportFolder()
     file_utils.createLabelListFromFolder()
     return file_utils
+
 
 def main(input: str, output: str):
     initconv = initConversion(input, output)
@@ -21,6 +22,7 @@ def main(input: str, output: str):
             convert = L2Y(loadjson, label_list, input)
             convert.convert2YOLO()
     initconv.moveAnnotationsToFolder()
+
 
 if __name__ == "__main__":
     typer.run(main)

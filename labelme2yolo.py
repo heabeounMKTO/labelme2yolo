@@ -3,7 +3,6 @@ import math
 import tqdm
 
 
-
 class Labelme2Yolo:
     def __init__(self, json, labellist, processingFolder):
         # self.jsonFilePath = Path(jsonFilePath)
