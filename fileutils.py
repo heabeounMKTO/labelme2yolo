@@ -13,10 +13,10 @@ class fileUtils:
     def __init__(self, processingFolder, exportFolder):
         self.processingFolder = processingFolder
         self.exportFolder = exportFolder
-    
+
     def getProcessingFolder(self):
         return self.processingFolder
-    
+
     def getExportFolder(self):
         return self.exportFolder
 
