@@ -106,9 +106,9 @@ class Labelme2Yolo:
         return self.yoloarr
 
     def writeYOLOtoFile(self, yololabels, filename):
-        print("Writing annoations to File...")
+        # print("Writing annoations to File...")
         with open(filename, "w") as f:
-            for annotations in tqdm.tqdm(yololabels):
+            for annotations in yololabels:
                 f.write(str(annotations[0]))
                 f.write(" ")
                 f.write(str(annotations[1]))

@@ -11,19 +11,21 @@ class augmentImage:
     def __init__(self) -> None:
         return None
 
-    def applyAugmentation(self, input, labellist, bbox_coords, resize=640):
+    def applyAugmentation(self, input, labellist, bbox_coords, resize=112):
         image = cv2.imread(input)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         bboxes = bbox_coords
         categeory_id = labellist
         transform = A.Compose(
             [
-                A.ChannelDropout(),
-                A.Flip(always_apply=True),
-                A.Resize(resize, resize, always_apply=True),
-                A.HorizontalFlip(),
-                A.VerticalFlip(),
-                A.RandomRain(),
+                # A.ChannelDropout(),
+                A.ChannelShuffle(),
+                A.RandomShadow(),
+                A.CLAHE(),
+                A.RandomRotate90(),
+                # A.Resize(resize, resize, always_apply=True),
+                A.ImageCompression(quality_lower=60, quality_upper=70),
+                A.RandomBrightnessContrast(brightness_limit=0.1, contrast_limit=0.25,p=0.85)
             ],
             bbox_params=A.BboxParams(
                 format="yolo", label_fields=["categeory_id"], min_area=0.0
@@ -45,3 +47,5 @@ class augmentImage:
 # test = augmentImage()
 # result = test.applyAugmentation(testimage,labellist, bbx)
 # print(result)
+
+    

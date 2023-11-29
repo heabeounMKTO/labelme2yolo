@@ -5,7 +5,7 @@ from labelme2yolo import Labelme2Yolo as L2Y
 import typer
 from fileutils import fileUtils as fu
 import json
-
+from tqdm import tqdm
 
 class Kesa:
     def __init__(self) -> None:
@@ -38,7 +38,7 @@ class Kesa:
     def kesaConvertLabelme2Yolo_aug(self, input, output, time):
         conversion = self.kesaInitConversionFolder(input, output)
         label_list = conversion.loadLabelList()
-        for file in os.listdir(input):
+        for file in tqdm(os.listdir(input)):
             if file.endswith(".json"):
                 loadjson = json.load(open(os.path.join(input, file)))
                 convertLM_aug = L2Y(loadjson, label_list, input)

@@ -6,7 +6,7 @@ import shutil
 import math
 import yaml
 
-ext = [".jpeg", ".jpg", ".png"]
+ext = [".jpeg", ".jpg", ".JPG", ".png"]
 
 
 class fileUtils:
