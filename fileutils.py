@@ -84,11 +84,11 @@ class fileUtils:
             full_dest_image_path = os.path.join(dest_images_path, matchedImage)
 
             if os.path.exists(orig_images_path):
-                shutil.copy(orig_images_path, full_dest_image_path)
+                shutil.move(orig_images_path, full_dest_image_path)
             else:
                 pass
             if os.path.exists(orig_labels_path):
-                shutil.copy(orig_labels_path, full_dest_label_path)
+                shutil.move(orig_labels_path, full_dest_label_path)
             else:
                 pass
 
